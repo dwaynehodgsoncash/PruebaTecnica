@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:form id="blogreader-form">
+	<p:dialog header="Nuevo Registro" showEffect="fade" modal="true"
+		widgetVar="manageBlogReaderDialog" responsive="true">
+		<p:outputPanel id="manage-blogreader-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty BlogReaderBean.blogReaderEntity}">
+				<p:panelGrid layout="grid" columns="1">
+					<h:panelGroup>
+						<p:ajaxStatus onstart="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+						<div class="p-field">
+							<p:outputLabel for="@next">Código</p:outputLabel>
+							<p:inputText
+									id="codigoBlogReader"
+									style="width: 100%"
+									disabled="true"
+								    value="#{BlogReaderBean.blogReaderEntity.id}" />
+						</div>
+
+						<div class="p-field">
+							<p:outputLabel for="@next">Readers</p:outputLabel>
+							<p:selectOneMenu  value="#{BlogReaderBean.blogReaderEntity.idReader.id}">
+								<f:selectItem itemLabel="Seleccione ..." itemValue="#{null}"/>
+								<f:selectItems value="#{BlogReaderBean.listaReader}"
+											   var="reader"
+											   itemLabel="#{reader.name}"
+											   itemValue="#{reader.id}"/>
+							</p:selectOneMenu>
+						</div>
+
+						<div class="p-field">
+							<p:outputLabel for="@next">Blogs</p:outputLabel>
+							<p:selectOneMenu  value="#{BlogReaderBean.blogReaderEntity.idBlog.id}">
+								<f:selectItem itemLabel="Seleccione ..." itemValue="#{null}"/>
+								<f:selectItems value="#{BlogReaderBean.listaBlog}"
+											   var="blog"
+											   itemLabel="#{blog.title}"
+											   itemValue="#{blog.id}" />
+							</p:selectOneMenu>
+						</div>
+					</h:panelGroup>
+				</p:panelGrid>
+
+			</p:outputPanel>
+		</p:outputPanel>
+		<f:facet name="footer">
+			<p:commandButton value="Guardar" icon="pi pi-check"
+				actionListener="#{BlogReaderBean.saveBlogReader()}"
+				update="manage-blogreader-content" process="manage-blogreader-content @this" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('manageBlogReaderDialog').hide()" class="ui-button-secondary" process="@this"/>
+		</f:facet>
+	</p:dialog>
+</h:form>
+</ui:composition>

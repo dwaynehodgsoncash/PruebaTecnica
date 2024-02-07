@@ -1,0 +1,70 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Sistema BANDESAL</title>
+</h:head>
+
+<h:body>
+    <!-- style="margin:0;padding: 0;"
+    <img src="pages/images/blue4.jpg" style="object-fit: cover"
+          alt="" width="100%" height="13%"/>-->
+
+    <h:form>
+
+        <p:spacer height="120"></p:spacer>
+        <div>
+            <div class="p-col"></div>
+            <!-- <ui:include src="/pages/template/topbar.xhtml"></ui:include>-->
+            <div class="p-col">
+                <p:card style="width: 42%;margin-left:auto;margin-right:auto;">
+                    <f:facet name="title"> INGRESA TUS CREDENCIALES</f:facet>
+                    <p:panelGrid columns="1" layout="grid">
+                        <h:panelGroup class="ui-input-icon-left">
+                            <i class="pi pi-user"/>
+                            <p:outputLabel for="@next" value="Username"/>
+                            <p:inputText
+                                    value="#{UsuarioBean.usuario}"
+                                    style="width: 100%"
+                                    required="true"/>
+                            <p:message for="@previous"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup class="ui-input-icon-left">
+                            <i class="pi pi-key"/>
+                            <p:outputLabel for="@next" value="Password"/>
+                            <p:password
+                                    style="width: 100%"
+                                    value="#{UsuarioBean.contrasena}"
+                                    required="true"/>
+                            <p:message for="@previous"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+
+                    <f:facet name="footer">
+                        <p:growl id="growl" showDetail="true" />
+                        <p:commandButton
+                                ajax="false"
+                                process="@this"
+                                styleClass="mr-2"
+                                icon="pi pi-sign-in"
+                                value="Login"
+                                action="#{UsuarioBean.login()}"/>
+                    </f:facet>
+                </p:card>
+                <div class="layout-wrapper">
+                    <p:spacer height="163"></p:spacer>
+                    <ui:include src="/pages/template/footer.xhtml"></ui:include>
+                </div>
+            </div>
+            <div class="p-col">
+                <div class="box"></div>
+            </div>
+        </div>
+    </h:form>
+</h:body>
+</html>
+

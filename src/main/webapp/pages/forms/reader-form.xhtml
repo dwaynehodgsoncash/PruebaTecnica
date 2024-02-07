@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:form id="reader-form">
+	<p:dialog header="Nuevo Registro" showEffect="fade" modal="true"
+		widgetVar="manageReaderDialog" responsive="true">
+		<p:outputPanel id="manage-reader-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty ReaderBean.readerEntity}">
+				<p:panelGrid layout="grid" columns="1">
+					<h:panelGroup>
+						<p:ajaxStatus onstart="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+						<div class="p-field">
+							<p:outputLabel for="@next">Código</p:outputLabel>
+							<p:inputText
+									id="codigoReader"
+									style="width: 100%"
+									disabled="true"
+								    value="#{ReaderBean.readerEntity.id}" />
+						</div>
+
+						<div class="p-field">
+							<p:outputLabel for="@next">Nombre</p:outputLabel>
+							<p:inputText
+									id="nombre"
+									style="width: 100%"
+									maxlength="8"
+									required="true"
+									requiredMessage="El campo Nombre es requerido"
+									value="#{ReaderBean.readerEntity.name}" />
+						</div>
+					</h:panelGroup>
+				</p:panelGrid>
+
+			</p:outputPanel>
+		</p:outputPanel>
+		<f:facet name="footer">
+			<p:commandButton value="Guardar" icon="pi pi-check"
+				actionListener="#{ReaderBean.saveReader()}"
+				update="manage-reader-content" process="manage-reader-content @this" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('manageReaderDialog').hide()" class="ui-button-secondary" process="@this"/>
+		</f:facet>
+	</p:dialog>
+</h:form>
+</ui:composition>

@@ -1,0 +1,120 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="title">Listado de BlogReaders</ui:define>
+    <ui:define name="layout">
+        <div class="card crud-demo">
+            <h:form id="form">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton
+                                rendered="true"
+                                value="Nuevo"
+                                icon="pi pi-plus"
+                                actionListener="#{BlogReaderBean.openNew}"
+                                update="blogreader-form:manage-blogreader-content"
+                                oncomplete="PF('manageBlogReaderDialog').show()"
+                                style="margin-right: 0.5rem">
+                            <p:resetInput target="blogreader-form:manage-blogreader-content"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable
+                        id="dt-blogreaders"
+                        widgetVar="dtBlogReader"
+                        var="blogReader"
+                        value="#{BlogReaderBean.listaBlogReaderEntity}"
+                        reflow="true"
+                        paginator="true"
+                        rows="10"
+                        paginatorPosition="bottom"
+                        filteredValue="#{BlogReaderBean.filtroBlogReaderEntity}"
+                        emptyMessage="No se encontraron Registros">
+
+                    <p:column
+                            style="width:20%"
+                            headerText="Codigo BlogReader"
+                            sortBy="#{blogReader.id}"
+                            filterBy="#{blogReader.id}"
+                            filterMatchMode="contains">
+                        <h:outputText value="#{blogReader.id}"/>
+                    </p:column>
+                    <p:column
+                            style="width:35%"
+                            headerText="Lectores"
+                            sortBy="#{blogReader.idReader.name}"
+                            filterBy="#{blogReader.idReader.name}"
+                            filterMatchMode="contains">
+                        <h:outputText value="#{blogReader.idReader.name}"/>
+                    </p:column>
+
+                    <p:column
+                            style="width:35%"
+                            headerText="Blogs"
+                            sortBy="#{blogReader.idBlog.title}"
+                            filterBy="#{blogReader.idBlog.title}"
+                            filterMatchMode="contains">
+                        <h:outputText value="#{blogReader.idBlog.title}"/>
+                    </p:column>
+                    <p:column style="width:10%" headerText="Opciones" exportable="false" rendered="true">
+                        <p:commandButton
+                                id="editBlogReader"
+                                icon="pi pi-pencil"
+                                update="blogreader-form:manage-blogreader-content"
+                                oncomplete="PF('manageBlogReaderDialog').show()"
+                                styleClass="edit-button rounded-button"
+                                process="@this">
+                            <f:setPropertyActionListener
+                                    value="#{blogReader}"
+                                    target="#{BlogReaderBean.blogReaderEntity}"/>
+                            <p:tooltip for="editBlogReader" value="Editar" position="top"/>
+                        </p:commandButton>
+
+                        <p:commandButton
+                                id="removeBlogReader"
+                                class="ui-button-warning rounded-button"
+                                icon="pi pi-trash"
+                                process="@this"
+                                styleClass="edit-button rounded-button"
+                                action="#{BlogReaderBean.deleteBlogReader()}">
+                            <f:setPropertyActionListener
+                                    value="#{blogReader}"
+                                    target="#{BlogReaderBean.blogReaderEntity}"/>
+                            <p:confirm
+                                    header="Confirmar"
+                                    message="¿Está seguro que deseas eliminar este Registro?"
+                                    icon="pi pi-exclamation-triangle"/>
+                            <p:tooltip for="removeBlogReader" value="Eliminar" position="top"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+            <ui:include src="blogreader-form.xhtml"></ui:include>
+
+            <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+        su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
+            <p:confirmDialog global="true" showEffect="fade" width="300">
+                <p:commandButton
+                        value="Si"
+                        type="button"
+                        styleClass="ui-confirmdialog-yes"
+                        icon="pi pi-check"/>
+                <p:commandButton
+                        value="No"
+                        type="button"
+                        styleClass="ui-confirmdialog-no ui-button-secondary"
+                        icon="pi pi-times"/>
+            </p:confirmDialog>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,111 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="title">Listado de Lectores</ui:define>
+    <ui:define name="layout">
+        <div class="card crud-demo">
+            <h:form id="form">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton
+                                rendered="true"
+                                value="Nuevo"
+                                icon="pi pi-plus"
+                                actionListener="#{ReaderBean.openNew}"
+                                update="reader-form:manage-reader-content"
+                                oncomplete="PF('manageReaderDialog').show()"
+                                style="margin-right: 0.5rem">
+                            <p:resetInput target="reader-form:manage-reader-content"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable
+                        id="dt-readers"
+                        widgetVar="dtReader"
+                        var="reader"
+                        value="#{ReaderBean.listaReaderEntity}"
+                        reflow="true"
+                        paginator="true"
+                        rows="10"
+                        paginatorPosition="bottom"
+                        filteredValue="#{ReaderBean.filtroReaderEntity}"
+                        emptyMessage="No se encontraron Registros">
+
+                    <p:column
+                            style="width:12%"
+                            headerText="Codigo Reader"
+                            sortBy="#{reader.id}"
+                            filterBy="#{reader.id}"
+                            filterMatchMode="contains">
+                        <h:outputText value="#{reader.id}"/>
+                    </p:column>
+                    <p:column
+                            style="width:78%"
+                            headerText="Nombre"
+                            sortBy="#{reader.name}"
+                            filterBy="#{reader.name}"
+                            filterMatchMode="contains">
+                        <h:outputText value="#{reader.name}"/>
+                    </p:column>
+                    <p:column style="width:10%" headerText="Opciones" exportable="false" rendered="true">
+                        <p:commandButton
+                                id="editReader"
+                                icon="pi pi-pencil"
+                                update="reader-form:manage-reader-content"
+                                oncomplete="PF('manageReaderDialog').show()"
+                                styleClass="edit-button rounded-button"
+                                process="@this">
+                            <f:setPropertyActionListener
+                                    value="#{reader}"
+                                    target="#{ReaderBean.readerEntity}"/>
+                            <p:tooltip for="editReader" value="Editar" position="top"/>
+                        </p:commandButton>
+
+                        <p:commandButton
+                                id="removeReader"
+                                class="ui-button-warning rounded-button"
+                                icon="pi pi-trash"
+                                process="@this"
+                                styleClass="edit-button rounded-button"
+                                action="#{ReaderBean.deleteReader()}">
+                            <f:setPropertyActionListener
+                                    value="#{reader}"
+                                    target="#{ReaderBean.readerEntity}"/>
+                            <p:confirm
+                                    header="Confirmar"
+                                    message="¿Está seguro que deseas eliminar este Registro?"
+                                    icon="pi pi-exclamation-triangle"/>
+                            <p:tooltip for="removeReader" value="Eliminar" position="top"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+            <ui:include src="reader-form.xhtml"></ui:include>
+
+            <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+        su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
+            <p:confirmDialog global="true" showEffect="fade" width="300">
+                <p:commandButton
+                        value="Si"
+                        type="button"
+                        styleClass="ui-confirmdialog-yes"
+                        icon="pi pi-check"/>
+                <p:commandButton
+                        value="No"
+                        type="button"
+                        styleClass="ui-confirmdialog-no ui-button-secondary"
+                        icon="pi pi-times"/>
+            </p:confirmDialog>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

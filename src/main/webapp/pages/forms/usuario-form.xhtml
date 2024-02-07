@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:form id="usuario-form">
+	<p:dialog header="Nuevo Usuario" showEffect="fade" modal="true"
+		widgetVar="manageUserDialog" responsive="true">
+		<p:outputPanel id="manage-user-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty UsuarioBean.usuarioEntity}">
+				<p:panelGrid layout="grid" columns="2">
+					<h:panelGroup>
+						<p:ajaxStatus onstart="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+						<div class="p-field">
+							<p:outputLabel for="@next">Código</p:outputLabel>
+							<p:inputText
+									id="codigoUsername"
+									disabled="true"
+								    value="#{UsuarioBean.usuarioEntity.id}" />
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Nombre</p:outputLabel>
+							<p:inputText
+									id="nombre"
+									maxlength="50"
+									required="true"
+									requiredMessage="El campo Nombre es requerido"
+									value="#{UsuarioBean.usuarioEntity.nombre}" />
+						</div>
+
+						<div class="p-field">
+							<p:outputLabel for="@next" >Contraseña</p:outputLabel>
+							<p:password id="password1"
+										required="true"
+										redisplay="true"
+										maxlength="100"
+										requiredMessage="El campo Contraseña es requerido"
+										validatorMessage="Las contraseña deben councidir"
+										value="#{UsuarioBean.usuarioEntity.clave}"
+										match="password2">
+							</p:password>
+						</div>
+
+					</h:panelGroup>
+					<h:panelGroup>
+						<div class="p-field">
+							<p:outputLabel for="@next">Username</p:outputLabel>
+							<p:inputText
+									id="username"
+									maxlength="50"
+									required="true"
+									requiredMessage="El campo Username es requerido"
+									value="#{UsuarioBean.usuarioEntity.usuario}" />
+						</div>
+
+						<div class="p-field">
+							<p:outputLabel for="@next">Apellido</p:outputLabel>
+							<p:inputText
+									id="apellido"
+									maxlength="50"
+									required="true"
+									requiredMessage="El campo Apellido es requerido"
+									value="#{UsuarioBean.usuarioEntity.apellido}" />
+						</div>
+
+						<div class="p-field">
+							<p:outputLabel for="@next" >Contraseña</p:outputLabel>
+							<p:password id="password2"
+										maxlength="100"
+										required="true"
+										redisplay="true"
+										value="#{UsuarioBean.usuarioEntity.clave}">
+							</p:password>
+						</div>
+
+					</h:panelGroup>
+				</p:panelGrid>
+
+			</p:outputPanel>
+		</p:outputPanel>
+		<f:facet name="footer">
+			<p:commandButton value="Guardar" icon="pi pi-check"
+				actionListener="#{UsuarioBean.saveUser}"
+				update="manage-user-content" process="manage-user-content @this" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('manageUserDialog').hide()" class="ui-button-secondary" process="@this"/>
+		</f:facet>
+	</p:dialog>
+</h:form>
+</ui:composition>

@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="layout">
+        <h:form>
+            <p:card style=" width: 100%;
+                            margin-bottom: 0;
+                            display: flex;
+                            flex-direction: column;">
+
+                <!-- project description -->
+                <h2>Descripcion del proyecto</h2>
+                <ul style=" margin: 0;
+                            padding: 0;
+                            margin-bottom: 20px;
+                            margin-left: 20px;">
+
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="IDE: "/>
+                        <p:outputLabel value="IntelliJ IDEA 2023.2.3 (Ultimate Edition)"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Lenguaje de programación: "/>
+                        <p:outputLabel value="Java 17"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Framework de desarrollo: "/>
+                        <p:outputLabel value="Java Server Faces (JSF 3.0.0), "/>
+                        <p:outputLabel value="Primefaces 13.0.2, "/>
+                        <p:outputLabel value="EJB 4.0.0, "/>
+                        <p:outputLabel value="Maven 3.3.2, "/>
+                        <p:outputLabel value="JPA 5.0.0"/>
+
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Base de datos: "/>
+                        <p:outputLabel value="MySql 8.0.36"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Servidor de aplicaciones: "/>
+                        <p:outputLabel value="Glassfish 7.0.9"/>
+                    </li>
+
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Sistema operativo: "/>
+                        <p:outputLabel value="Windows"/>
+                    </li>
+                </ul>
+            </p:card>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

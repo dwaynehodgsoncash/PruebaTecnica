@@ -1,0 +1,61 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <div class="layout-sidebar">
+
+        <div class="layout-menu">
+            <p:menubar>
+                <p:submenu label="Menú Principal" icon="pi pi-fw pi-globe">
+                    <p:menuitem
+                            rendered="true"
+                            outcome="/pages/forms/reader-list.xhtml"
+                            value="Readers"
+                            icon="pi pi-fw pi-arrow-circle-right"
+                            onclick="#{ReaderBean.loadData()}">
+                    </p:menuitem>
+
+                    <p:menuitem
+                            rendered="true"
+                            outcome="/pages/forms/blog-list.xhtml"
+                            value="Blogs"
+                            icon="pi pi-fw pi-arrow-circle-right"
+                            onclick="#{BlogBean.loadData()}">
+                    </p:menuitem>
+
+                    <p:menuitem
+                            rendered="true"
+                            outcome="/pages/forms/blogReader-list.xhtml"
+                            value="Readers por blog"
+                            icon="pi pi-fw pi-arrow-circle-right"
+                            onclick="#{BlogReaderBean.loadData()}">
+                    </p:menuitem>
+
+                    <p:menuitem
+                            rendered="true"
+                            outcome="/pages/forms/usuario-list.xhtml"
+                            value="Usuarios"
+                            icon="pi pi-fw pi-arrow-circle-right"
+                            onclick="#{UsuarioBean.loadData()}">
+                    </p:menuitem>
+                </p:submenu>
+            </p:menubar>
+
+            <p:menubar>
+                <p:submenu label="#{UsuarioBean.usuarioLogeado}" icon="pi pi-fw pi-user">
+                    <p:menuitem value="Cerrar Sesión" icon="pi pi-fw pi-sign-out" action="#{UsuarioBean.logout()}">
+                        <p:confirm
+                                header="Confirmar"
+                                message="¿Está seguro que deseas cerrar sesión?"
+                                icon="pi pi-exclamation-triangle" />
+                    </p:menuitem>
+                </p:submenu>
+            </p:menubar>
+
+
+        </div>
+
+    </div>
+</ui:composition>

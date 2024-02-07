@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:form id="blog-form">
+	<p:dialog header="Nuevo Registro" showEffect="fade" modal="true"
+		widgetVar="manageBlogDialog" responsive="true">
+		<p:outputPanel id="manage-blog-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty BlogBean.blogEntity}">
+				<p:panelGrid layout="grid" columns="2">
+					<h:panelGroup>
+						<p:ajaxStatus onstart="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+						<div class="p-field">
+							<p:outputLabel for="@next">Código</p:outputLabel>
+							<p:inputText
+									id="codigoBlog"
+									style="width: 100%"
+									disabled="true"
+								    value="#{BlogBean.blogEntity.id}" />
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Descripción</p:outputLabel>
+							<p:inputTextarea
+									id="comentario"
+									rows="6"
+									style="width: 100%"
+									maxlength="4000"
+									required="false"
+									value="#{BlogBean.blogEntity.description}" />
+						</div>
+					</h:panelGroup>
+					<h:panelGroup>
+						<div class="p-field">
+							<p:outputLabel for="@next">Titulo</p:outputLabel>
+							<p:inputText
+									id="Title"
+									style="width: 100%"
+									maxlength="50"
+									required="true"
+									requiredMessage="El campo Titulo es requerido"
+									value="#{BlogBean.blogEntity.title}" />
+						</div>
+					</h:panelGroup>
+				</p:panelGrid>
+
+			</p:outputPanel>
+		</p:outputPanel>
+		<f:facet name="footer">
+			<p:commandButton value="Guardar" icon="pi pi-check"
+				actionListener="#{BlogBean.saveBlog()}"
+				update="manage-blog-content" process="manage-blog-content @this" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('manageBlogDialog').hide()" class="ui-button-secondary" process="@this"/>
+		</f:facet>
+	</p:dialog>
+</h:form>
+</ui:composition>
