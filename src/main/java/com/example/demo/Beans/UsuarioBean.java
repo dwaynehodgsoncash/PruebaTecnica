@@ -57,17 +57,22 @@ public class UsuarioBean implements Serializable {
                     .addPepper("shared-secret")
                     .with(bcrypt);
 
-            if(!usuarioEntity.getUsuario().equalsIgnoreCase(usuario) && !verified){
+            if(!usuarioEntity.getUsuario().equalsIgnoreCase(usuario)){
                 String mensaje="El nombre del Usuario o la Contraseña son incorrectos";
                 info(mensaje);
-            }
-            else {
-                getFacesContext()
-                        .getExternalContext()
-                        .redirect(
-                                getRequest().getContextPath() + "/pages/welcome/welcome.xhtml"
-                        );
-                usuarioLogeado = String.valueOf((usuarioEntity.getNombre()+"."+usuarioEntity.getApellido()));
+            }else{
+                if(!verified ){
+                    String mensaje="El nombre del Usuario o la Contraseña son incorrectos";
+                    info(mensaje);
+                }
+                else {
+                    getFacesContext()
+                            .getExternalContext()
+                            .redirect(
+                                    getRequest().getContextPath() + "/pages/welcome/welcome.xhtml"
+                            );
+                    usuarioLogeado = String.valueOf((usuarioEntity.getNombre()+"."+usuarioEntity.getApellido()));
+                }
             }
         }
     }
