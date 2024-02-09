@@ -38,8 +38,13 @@
 									style="width: 100%"
 									maxlength="50"
 									required="true"
-									requiredMessage="El campo Titulo es requerido"
+									requiredMessage="Campo Requerido"
 									value="#{BlogBean.blogEntity.title}" />
+						</div>
+						<div class="p-field">
+							<p:messages severity="error">
+								<p:autoUpdate/>
+							</p:messages>
 						</div>
 					</h:panelGroup>
 				</p:panelGrid>

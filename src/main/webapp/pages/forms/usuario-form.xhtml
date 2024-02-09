@@ -9,6 +9,7 @@
 		<p:outputPanel id="manage-user-content" class="ui-fluid">
 			<p:outputPanel rendered="#{not empty UsuarioBean.usuarioEntity}">
 				<p:panelGrid layout="grid" columns="2">
+
 					<h:panelGroup>
 						<p:ajaxStatus onstart="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
 						<div class="p-field">
@@ -24,7 +25,7 @@
 									id="nombre"
 									maxlength="50"
 									required="true"
-									requiredMessage="El campo Nombre es requerido"
+									requiredMessage="Campo Requerido"
 									value="#{UsuarioBean.usuarioEntity.nombre}" />
 						</div>
 
@@ -34,11 +35,16 @@
 										required="true"
 										redisplay="true"
 										maxlength="100"
-										requiredMessage="El campo Contraseña es requerido"
+										requiredMessage="Campo Requerido"
 										validatorMessage="Las contraseña deben councidir"
 										value="#{UsuarioBean.usuarioEntity.clave}"
 										match="password2">
 							</p:password>
+						</div>
+						<div class="p-field">
+							<p:messages severity="error">
+								<p:autoUpdate/>
+							</p:messages>
 						</div>
 
 					</h:panelGroup>
@@ -49,7 +55,7 @@
 									id="username"
 									maxlength="50"
 									required="true"
-									requiredMessage="El campo Username es requerido"
+									requiredMessage="Campo Requerido"
 									value="#{UsuarioBean.usuarioEntity.usuario}" />
 						</div>
 
@@ -59,7 +65,7 @@
 									id="apellido"
 									maxlength="50"
 									required="true"
-									requiredMessage="El campo Apellido es requerido"
+									requiredMessage="Campo Requerido"
 									value="#{UsuarioBean.usuarioEntity.apellido}" />
 						</div>
 
@@ -71,6 +77,11 @@
 										redisplay="true"
 										value="#{UsuarioBean.usuarioEntity.clave}">
 							</p:password>
+						</div>
+						<div class="p-field">
+							<p:messages severity="error">
+								<p:autoUpdate/>
+							</p:messages>
 						</div>
 
 					</h:panelGroup>

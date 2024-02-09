@@ -27,8 +27,13 @@
 									style="width: 100%"
 									maxlength="8"
 									required="true"
-									requiredMessage="El campo Nombre es requerido"
+									requiredMessage="Campo Requerido"
 									value="#{ReaderBean.readerEntity.name}" />
+						</div>
+						<div class="p-field">
+							<p:messages severity="error">
+								<p:autoUpdate/>
+							</p:messages>
 						</div>
 					</h:panelGroup>
 				</p:panelGrid>

@@ -22,7 +22,8 @@
 
 						<div class="p-field">
 							<p:outputLabel for="@next">Readers</p:outputLabel>
-							<p:selectOneMenu  value="#{BlogReaderBean.blogReaderEntity.idReader.id}">
+							<p:selectOneMenu  value="#{BlogReaderBean.blogReaderEntity.idReader.id}"
+							required="true" requiredMessage="Campo Requerido">
 								<f:selectItem itemLabel="Seleccione ..." itemValue="#{null}"/>
 								<f:selectItems value="#{BlogReaderBean.listaReader}"
 											   var="reader"
@@ -33,13 +34,19 @@
 
 						<div class="p-field">
 							<p:outputLabel for="@next">Blogs</p:outputLabel>
-							<p:selectOneMenu  value="#{BlogReaderBean.blogReaderEntity.idBlog.id}">
+							<p:selectOneMenu  value="#{BlogReaderBean.blogReaderEntity.idBlog.id}"
+											  required="true" requiredMessage="Campo Requerido">
 								<f:selectItem itemLabel="Seleccione ..." itemValue="#{null}"/>
 								<f:selectItems value="#{BlogReaderBean.listaBlog}"
 											   var="blog"
 											   itemLabel="#{blog.title}"
 											   itemValue="#{blog.id}" />
 							</p:selectOneMenu>
+						</div>
+						<div class="p-field">
+							<p:messages severity="error">
+								<p:autoUpdate/>
+							</p:messages>
 						</div>
 					</h:panelGroup>
 				</p:panelGrid>
