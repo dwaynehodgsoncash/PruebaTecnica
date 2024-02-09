@@ -67,15 +67,23 @@ public class ReaderBean implements Serializable {
     }
 
     public void deleteReader() {
-        if (this.readerEntity.getId() != 0) {
-            readerEntityDao.delete(readerEntity);
-            listaReaderEntity=readerEntityDao.findAll();
+        try {
+            if (this.readerEntity.getId() != 0) {
+                readerEntityDao.delete(readerEntity);
+                listaReaderEntity=readerEntityDao.findAll();
 
-            String mensaje="Registro Borrado";
+                String mensaje="Registro Borrado";
+                info(mensaje);
+            }
+            PrimeFaces.current().executeScript("PF('manageReaderDialog').hide()");
+            PrimeFaces.current().ajax().update("form:dt-readers");
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
+            String mensaje="No se puede eliminar, el registro esta asociado a la tabla principal blog_reader";
             info(mensaje);
         }
-        PrimeFaces.current().executeScript("PF('manageReaderDialog').hide()");
-        PrimeFaces.current().ajax().update("form:dt-readers");
     }
 
     protected FacesContext getFacesContext() {

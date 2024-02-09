@@ -27,32 +27,32 @@ public class BlogBean implements Serializable {
     BlogEntityDao blogEntityDao;
 
     public void loadData() {
-        try{
-            this.listaBlogEntity= Collections.emptyList();
+        try {
+            this.listaBlogEntity = Collections.emptyList();
             this.listaBlogEntity = blogEntityDao.findAll();
-        }catch (Exception e){
+        } catch (Exception e) {
             /* PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");*/
         }
 
     }
 
     public void openNew() {
-        this.blogEntity= new BlogEntity();
+        this.blogEntity = new BlogEntity();
     }
 
     public void saveBlog() {
         if (this.blogEntity.getId() == 0) {
-            BlogEntity blogEntityEncontrado= new BlogEntity();
+            BlogEntity blogEntityEncontrado = new BlogEntity();
 
-            blogEntityEncontrado=blogEntityDao.findByBlogEntity(blogEntity.getTitle());
-            if(blogEntityEncontrado.getTitle() !=null){
-                String mensaje="Registro Ya Existe";
+            blogEntityEncontrado = blogEntityDao.findByBlogEntity(blogEntity.getTitle());
+            if (blogEntityEncontrado.getTitle() != null) {
+                String mensaje = "Registro Ya Existe";
                 info(mensaje);
-            }else{
+            } else {
                 blogEntityDao.create(blogEntity);
-                listaBlogEntity=blogEntityDao.findAll();
+                listaBlogEntity = blogEntityDao.findAll();
 
-                String mensaje="Usuario adicionado";
+                String mensaje = "Usuario adicionado";
                 info(mensaje);
                 // obteniendo el mensage desde el fichero de recursos, con la llave message_user_added
                 PrimeFaces.current().executeScript("PF('manageBlogDialog').hide()"); //Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
@@ -60,9 +60,9 @@ public class BlogBean implements Serializable {
             }
         } else {
             blogEntityDao.update(blogEntity);
-            listaBlogEntity=blogEntityDao.findAll();
+            listaBlogEntity = blogEntityDao.findAll();
 
-            String mensaje="Registro modificado";
+            String mensaje = "Registro modificado";
             info(mensaje);
             PrimeFaces.current().executeScript("PF('manageBlogDialog').hide()");
             PrimeFaces.current().ajax().update("form:dt-blogs");
@@ -70,15 +70,22 @@ public class BlogBean implements Serializable {
     }
 
     public void deleteBlog() {
-        if (this.blogEntity.getId() != 0) {
-            blogEntityDao.delete(blogEntity);
-            listaBlogEntity=blogEntityDao.findAll();
+        try {
+            if (this.blogEntity.getId() != 0) {
+                blogEntityDao.delete(blogEntity);
+                listaBlogEntity = blogEntityDao.findAll();
 
-            String mensaje="Registro Borrado";
+                String mensaje = "Registro Borrado";
+                info(mensaje);
+            }
+            PrimeFaces.current().executeScript("PF('manageBlogDialog').hide()");
+            PrimeFaces.current().ajax().update("form:dt-blogs");
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
+            String mensaje = "No se puede eliminar, el registro esta asociado a la tabla principal blog_reader";
             info(mensaje);
         }
-        PrimeFaces.current().executeScript("PF('manageBlogDialog').hide()");
-        PrimeFaces.current().ajax().update("form:dt-blogs");
     }
 
     protected FacesContext getFacesContext() {
