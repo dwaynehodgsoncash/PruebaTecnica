@@ -4,6 +4,7 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
+    <ui:param name="paramBean" value="#{MenuBean}"/>
     <div class="layout-sidebar">
 
         <div class="layout-menu">
@@ -40,12 +41,27 @@
                             icon="pi pi-fw pi-arrow-circle-right"
                             onclick="#{UsuarioBean.loadData()}">
                     </p:menuitem>
+
+                    <p:menuitem
+                            rendered="true"
+                            value="Logout"
+                            icon="pi pi-fw pi-arrow-circle-right"
+                            action="#{MenuBean.logout()}">
+                        <p:confirm
+                                header="Confirmar"
+                                message="¿Está seguro que deseas cerrar sesión?"
+                                icon="pi pi-exclamation-triangle" />
+                    </p:menuitem>
                 </p:submenu>
             </p:menubar>
 
             <p:menubar>
                 <p:submenu label="#{UsuarioBean.usuarioLogeado}" icon="pi pi-fw pi-user">
-                    <p:menuitem value="Cerrar Sesión" icon="pi pi-fw pi-sign-out" action="#{UsuarioBean.logout()}">
+                    <p:menuitem
+                            rendered="true"
+                            value="Cerrar Sesión"
+                            icon="pi pi-fw pi-sign-out"
+                            action="#{MenuBean.logout()}">
                         <p:confirm
                                 header="Confirmar"
                                 message="¿Está seguro que deseas cerrar sesión?"

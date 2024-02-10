@@ -11,12 +11,14 @@ import jakarta.ejb.EJB;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.type.ListType;
 import org.primefaces.PrimeFaces;
 
@@ -66,6 +68,11 @@ public class UsuarioBean implements Serializable {
                     info(mensaje);
                 }
                 else {
+                    //setaer la variable session de usuario utilizado en el SecurityFilter
+                    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    HttpSession session = (HttpSession) externalContext.getSession(true);
+                    session.setAttribute("usuario", usuarioEntity.getUsuario());
+
                     getFacesContext()
                             .getExternalContext()
                             .redirect(
